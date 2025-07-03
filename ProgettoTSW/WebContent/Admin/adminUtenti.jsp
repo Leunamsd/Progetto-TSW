@@ -27,7 +27,7 @@
         <td><%= rs.getString("username") %></td>
         <td><%= rs.getString("email") %></td>
         <td><%= rs.getString("ruolo") %></td>
-        <td><form action="/ProgettoTSW/EliminaProfiloServlet" method="post" onsubmit="return confirm('Eliminare questo utente?');">
+        <td><form action="/ProgettoTSW/EliminaProfiloServlet" method="post" onsubmit="return confermaEliminazioneProf();">
 		    <input type="hidden" name="id_utente" value="<%= rs.getInt("id_utente") %>">
 		    <button type="submit">Elimina</button>
 		</form></td>

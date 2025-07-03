@@ -35,7 +35,7 @@
         <td><%= rs.getString("stato_vendita") %></td>
         <td>
         	<a href="/ProgettoTSW/User/ordine.jsp?id_vendita=<%= idOrdine %>">Dettagli Ordine</a><br>
-	        <form action="/ProgettoTSW/CancellaOrdineServlet" method="post" onsubmit="return confirm('Eliminare questo ordine?');">
+	        <form action="/ProgettoTSW/CancellaOrdineServlet" method="post" onsubmit="return confermaEliminazioneOrd();">
 			    <input type="hidden" name="id_ordine" value="<%= idOrdine %>">
 			    <input type="hidden" name="origine" value="profilo">
 			    <button type="submit">Elimina Ordine</button>

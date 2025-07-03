@@ -44,7 +44,7 @@ try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/
             </select>
             <button type="submit">Aggiorna</button>
         </form>
-        <form action="/ProgettoTSW/EliminaSegnalazioneServlet" method="post" style="display:inline;">
+        <form action="/ProgettoTSW/EliminaSegnalazioneServlet" method="post">
             <input type="hidden" name="id_segnalazione" value="<%= rs.getInt("id_segnalazione") %>">
             <button type="submit" class="elimina-button">Elimina</button>
         </form>

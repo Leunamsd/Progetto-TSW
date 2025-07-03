@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <title>Dashboard - Utenti</title>
     <link rel="stylesheet" type="text/css" href="../Styles/stile.css">
+    <script src="<%= request.getContextPath() %>/Scripts/Scripts.js"></script>
 </head>
 
 <body>
@@ -36,7 +37,7 @@
         <td>€<%= rs.getBigDecimal("prezzo") %></td>
         <td><%= rs.getInt("quantita") %></td>
         <td><%= rs.getString("condizione") %></td>
-        <td><form action="/ProgettoTSW/EliminaInserzioneServlet" method="post" onsubmit="return confirm('Eliminare questa inserzione?');">
+        <td><form action="/ProgettoTSW/EliminaInserzioneServlet" method="post" onsubmit="return confermaEliminazioneIns();">
 		    <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
 		    <input type="hidden" name="id_utente" value="<%= idUtenteInserzionista %>">
 		    <input type="hidden" name="origine" value="admin">

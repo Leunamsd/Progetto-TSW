@@ -51,6 +51,7 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
                 stmt.setInt(2, idUtente);
                 stmt.setInt(3, idInserzione);
                 stmt.executeUpdate();
+                
             } else {
                 rs.close();
                 stmt.close();
@@ -62,11 +63,18 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
                 stmt.setInt(2, idInserzione);
                 stmt.executeUpdate();
             }
+            
+            // Riduci la quantità dell'inserzione
+            String updateInserzioneSql = "UPDATE Inserzioni SET quantita = quantita - 1 WHERE id_inserzione = ? AND quantita > 0";
+            stmt = conn.prepareStatement(updateInserzioneSql);
+            stmt.setInt(1, idInserzione);
+            stmt.executeUpdate();
 
             response.sendRedirect("/ProgettoTSW/User/carrello.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();
+            System.out.println("Errore: " + e.getMessage());
             response.sendRedirect("errore.jsp");
         } finally {
             try { if (stmt != null) stmt.close(); if (conn != null) conn.close(); } catch (Exception e) {}

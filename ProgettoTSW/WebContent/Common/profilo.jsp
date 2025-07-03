@@ -33,16 +33,7 @@
 <meta charset="UTF-8">
 <title>Cardplanet - Profilo di <%= username %></title>
 <link rel="stylesheet" type="text/css" href="../Styles/stile.css">
-<script>
-function confermaEliminazioneIns() {
-  return confirm("Sei sicuro di voler eliminare questa inserzione?");
-}
-</script>
-<script>
-function confermaEliminazioneRec() {
-  return confirm("Sei sicuro di voler eliminare questa recensione?");
-}
-</script>
+<script src="<%= request.getContextPath() %>/Scripts/Scripts.js"></script>
 </head>
 
 <body>
@@ -143,6 +134,11 @@ function confermaEliminazioneRec() {
 	                <button type="submit" class="elimina-button">Elimina</button>
 	            <% } %>
 	            </form>
+	            <form action="/ProgettoTSW/AumentaQuantitaServlet" method="post" onsubmit="return validaQuantita();">
+			        <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
+			        <input type="number" name="quantita_da_aggiungere" value="1" min="1">
+			        <button type="submit">Aggiungi quantità</button>
+			    </form>
 	        </td>
 	    </tr>
 	<%
@@ -151,7 +147,7 @@ function confermaEliminazioneRec() {
 	</table><br>
 	
 	<% if(isLoggedIn && idUtenteSessione == idUtente) { %>
-	<form action="/ProgettoTSW/EliminaProfiloServlet" method="post" onsubmit="return confirm('Vuoi davvero eliminare il tuo account?');">
+	<form action="/ProgettoTSW/EliminaProfiloServlet" method="post" onsubmit="return confermaEliminazioneProf();">
         <input type="hidden" name="id_utente" value="<%= idUtente %>">
         <button type="submit" class="elimina-button">Elimina il tuo profilo</button>
     </form>

@@ -16,6 +16,7 @@
     <meta charset="UTF-8">
     <title>Dashboard - Ordini</title>
     <link rel="stylesheet" type="text/css" href="../Styles/stile.css">
+    <script src="<%= request.getContextPath() %>/Scripts/Scripts.js"></script>
 </head>
 
 <body>
@@ -35,7 +36,7 @@
         <td><%= rs.getString("nome") %></td>
         <td><%= rs.getTimestamp("data_vendita") %></td>
         <td><%= rs.getString("stato_vendita") %></td>
-        <td><form action="EliminaOrdineServlet" method="post" onsubmit="return confirm('Eliminare questo ordine?');">
+        <td><form action="EliminaOrdineServlet" method="post" onsubmit="return confermaEliminazioneOrd();">
 		    <input type="hidden" name="id_ordine" value="<%= idOrdine %>">
 		    <input type="hidden" name="origine" value="profilo">
 		    <button type="submit">Elimina Ordine</button>

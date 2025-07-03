@@ -24,12 +24,12 @@ public class EliminaInserzioneServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
         String origine = request.getParameter("origine");
-        int idUtente = Integer.parseInt(request.getParameter("id_utente"));
+        Integer idUtente = (Integer) request.getSession().getAttribute("id_utente");
 		int idInserzione = Integer.parseInt(request.getParameter("id_inserzione"));
         HttpSession session = request.getSession();
         String ruolo = (String) session.getAttribute("ruolo");
 
-        if ("amministratore".equals(ruolo) || session.getAttribute("id_utente") != null) {
+        if ("amministratore".equals(ruolo) || idUtente != null) {
         		try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Ufficio@039!")){
 	        		String sql = "DELETE FROM Inserzioni WHERE id_inserzione = ? AND id_utente_inserzionista = ?";
 	            	PreparedStatement stmt = conn.prepareStatement(sql);

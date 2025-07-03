@@ -20,6 +20,7 @@
             String descrizione = rs.getString("serie") + " - " + rs.getString("rarita");
             double prezzo = rs.getDouble("prezzo");
             Blob immagine = rs.getBlob("immagine");
+            int quantitaDisponibile = rs.getInt("quantita");
 
             byte[] imgData = immagine.getBytes(1, (int) immagine.length());
             String base64Image = Base64.getEncoder().encodeToString(imgData);
@@ -35,6 +36,7 @@
 <meta charset="UTF-8">
 <title>eCommerce - <%= nome %></title>
 <link rel="stylesheet" type="text/css" href="../Styles/stile.css">
+<script src="<%= request.getContextPath() %>/Scripts/Scripts.js"></script>
 </head>
 
 	<%
@@ -68,27 +70,36 @@
 	<img src="data:image/jpeg;base64,<%= base64Image %>" width="225"><br>
 	<p>Condizioni: <%= condizione %></p>
 	<p><%= descrizione %></p>
+	<p>Disponibilità: <%= quantitaDisponibile %> pezzi</p>
 	<p>Prezzo: €<%= prezzo %></p>
 	
 	<!-- Pulsanti per tutti -->
-	<%if(idUtenteInserzionista != idUtente) { %>
-	<form action="/ProgettoTSW/AggiungiAlCarrelloServlet" method="post">
-	    <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
-	    <button type="submit">Aggiungi al carrello</button>
-	</form>
 	<form action="/ProgettoTSW/AggiungiWishlistServlet" method="post">
-	    <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
-	    <button type="submit">Aggiungi alla Wishlist</button>
+	        <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
+	        <button type="submit">Aggiungi alla Wishlist</button>
 	</form>
+	<% if (quantitaDisponibile > 0 && idUtenteInserzionista != idUtente) { %>
+	    <form action="/ProgettoTSW/AggiungiAlCarrelloServlet" method="post">
+	        <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
+	        <button type="submit">Aggiungi al carrello</button>
+	    </form>
+	<% } else if (quantitaDisponibile == 0) { %>
+	    <p class="alert">Prodotto esaurito</p>
 	<% } %>
 	
 	<% if (idUtente == idUtenteInserzionista || ruolo.equals("amministratore")) { %>
-	<!-- Pulsante solo per il proprietario o admin -->
-	<form action="/ProgettoTSW/EliminaInserzioneServlet" method="post">
-	    <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
-	    <button type="submit" class="elimina-button">Rimuovi l'inserzione</button>
-	</form>
-	<% } %>
+    <form action="/ProgettoTSW/EliminaInserzioneServlet" method="post" onsubmit="return confermaEliminazioneIns();">
+        <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
+        <button type="submit" class="elimina-button">Rimuovi l'inserzione</button>
+    </form>
+
+    <!-- Form per aumentare quantità -->
+    <form action="/ProgettoTSW/AumentaQuantitaServlet" method="post" onsubmit="return validaQuantita();">
+        <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
+        <input type="number" name="quantita_da_aggiungere" value="1" min="1">
+        <button type="submit">Aggiungi quantità</button>
+    </form>
+<% } %>
 
 <%
         }
