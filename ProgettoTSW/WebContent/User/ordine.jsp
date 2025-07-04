@@ -47,28 +47,6 @@ double totale = 0;
 </div>
 
 <p>Totale: <%= totale %></p>
-
-  <%
-  // Controllo se esiste già una recensione per questa vendita
-  PreparedStatement check = conn.prepareStatement("SELECT * FROM Recensioni WHERE id_transazione = ?");
-  check.setInt(1, idVendita);
-  ResultSet rsCheck = check.executeQuery();
-
-  if (rsCheck.next()) {
-  %>
-    <p><strong>Hai già lasciato una recensione per questo ordine.</strong></p>
-    <p>Voto: <%= rsCheck.getInt("voto") %> / 5</p>
-    <p>Commento: <%= rsCheck.getString("commento") %></p>
-  <%
-  } else {
-  %>
-    <jsp:include page="scriviRecensione.jsp">
-      <jsp:param name="id_transazione" value="<%= idVendita %>" />
-    </jsp:include>
-  <%
-  }
-  rsCheck.close(); check.close();
-  %>
   
 <%
 rs.close(); ps.close();

@@ -3,7 +3,8 @@
 <!DOCTYPE html>
 
 <head>
-<link rel="stylesheet" type="text/css" href="../Styles/stile.css">
+	<link rel="stylesheet" type="text/css" href="../Styles/stile.css">
+	<script src="<%= request.getContextPath() %>/Scripts/Scripts.js"></script>
 </head>
 
 <%
@@ -15,10 +16,10 @@ if (idUtente == null) {
 String idTransazione = request.getParameter("id_transazione");
 %>
 
-<form action="/ProgettoTSW/CreaRecensioneServlet" method="post">
+<form action="/ProgettoTSW/CreaRecensioneServlet" method="post" onsubmit="return validaVoto()">
   <input type="hidden" name="id_transazione" value="<%= idTransazione %>">
   <label>Voto (1-5):</label>
-  <input type="number" name="voto" min="1" max="5" required><br>
+  <input type="number" name="voto"  id="voto" min="1" max="5" required><br>
   <label>Commento:</label><br>
   <textarea name="commento" required></textarea><br>
   <input type="submit" value="Invia recensione">

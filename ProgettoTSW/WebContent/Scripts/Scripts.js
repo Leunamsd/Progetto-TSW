@@ -25,3 +25,16 @@ function validaQuantita() {
 
     return true; // tutto ok, invia il form
 }
+
+function validaVoto() {
+	const votoInput = document.getElementById("voto");
+	    const voto = parseInt(votoInput.value, 10);
+		
+		if (isNaN(voto) || voto < 1) {
+		        alert("Inserisci un numero valido compreso tra 1 e 5");
+		        votoInput.focus();
+		        return false;
+		    }
+
+		    return true;
+}

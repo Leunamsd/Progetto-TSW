@@ -22,7 +22,7 @@
 
 <h2>I tuoi Ordini</h2>
 <table border="1">
-    <tr><th>ID Ordine</th><th>Prodotto</th><th>Data</th><th>Totale Spesa</th><th>Stato</th><th>Azioni</th></tr>
+    <tr><th>ID Ordine</th><th>Prodotto</th><th>Data</th><th>Totale Spesa</th><th>Stato Vendita</th><th>Azioni</th></tr>
 <%
     while (rs.next()) {
     int idOrdine = rs.getInt("id_vendita");
@@ -34,6 +34,16 @@
         <td><%= rs.getDouble("totale") %></td>
         <td><%= rs.getString("stato_vendita") %></td>
         <td>
+			<form action="/ProgettoTSW/AggiornaStatoOrdineServlet" method="post">
+			    <input type="hidden" name="id_ordine" value="<%= idOrdine %>">
+			    <select name="stato">
+			        <option value="In Corso">In Corso</option>
+			        <option value="Completata">Completata</option>
+			        <option value="Annullata">Annullata</option>
+			    </select>
+			    <button type="submit">Aggiorna stato</button>
+			</form>
+			
         	<a href="/ProgettoTSW/User/ordine.jsp?id_vendita=<%= idOrdine %>">Dettagli Ordine</a><br>
 	        <form action="/ProgettoTSW/CancellaOrdineServlet" method="post" onsubmit="return confermaEliminazioneOrd();">
 			    <input type="hidden" name="id_ordine" value="<%= idOrdine %>">

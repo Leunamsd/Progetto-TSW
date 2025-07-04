@@ -132,13 +132,13 @@
 	                <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
 	                <input type="hidden" name="origine" value="profilo">
 	                <button type="submit" class="elimina-button">Elimina</button>
-	            <% } %>
 	            </form>
 	            <form action="/ProgettoTSW/AumentaQuantitaServlet" method="post" onsubmit="return validaQuantita();">
 			        <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
 			        <input type="number" name="quantita_da_aggiungere" value="1" min="1">
 			        <button type="submit">Aggiungi quantità</button>
 			    </form>
+			    <% } %>
 	        </td>
 	    </tr>
 	<%
@@ -170,6 +170,19 @@
     
     
 	<h3>Recensioni</h3>
+	
+	<% if (idUtenteSessione != null && idUtenteSessione != idUtenteProfilo) { %>
+	    <form action="/ProgettoTSW/AggiungiRecensioneServlet" method="post" onsubmit="return validaVoto();">
+	        <input type="hidden" name="id_destinatario" value="<%= idUtenteProfilo %>">
+	        <label>Transazione:<br><input type="number" name="id_transazione" required></label><br>
+	        <label>Voto (1-5):<br><input type="number" name="voto" id="voto" min="1" max="5" required></label><br>
+	        <label>Commento:<br><textarea name="commento" required></textarea></label><br>
+	        <button type="submit">Invia Recensione</button>
+	    </form>
+	<% } else if (idUtenteSessione == null) { %>
+	    <p><a href="/ProgettoTSW/Login.jsp">Effettua il login per scrivere una recensione</a></p>
+	<% } %>
+	
 	<%
 	PreparedStatement ps = conn.prepareStatement(
 	  "SELECT r.id_recensione, r.id_utente, r.voto, r.commento, r.data_creazione, u.username " +
