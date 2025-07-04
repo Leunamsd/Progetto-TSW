@@ -4,12 +4,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Crea Inserzione</title>
-<link rel="stylesheet" type="text/css" href="../Styles/stile.css">
+	<title>Crea Inserzione</title>
+	<link rel="stylesheet" type="text/css" href="../Styles/stile.css">
+	<script src="<%= request.getContextPath() %>/Scripts/Validazione.js"></script>
 </head>
 <body>
 	<h3>Aggiungi una nuova inserzione</h3>
-	<form action="/ProgettoTSW/InserisciInserzioneServlet" method="post" enctype="multipart/form-data">
+	<form action="/ProgettoTSW/InserisciInserzioneServlet" method="post" enctype="multipart/form-data" id="inserzioneForm">
 		<input type="hidden" name="id_utente" value=<%= idUtente %>>
 		<label>Immagine:<br><input type="file" name="immagine" accept="image/*" required></label><br>
 	    <label>Nome:<br><input type="text" name="nome" required></label><br>

@@ -96,7 +96,7 @@
     <!-- Form per aumentare quantità -->
     <form action="/ProgettoTSW/AumentaQuantitaServlet" method="post" onsubmit="return validaQuantita();">
         <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
-        <input type="number" name="quantita_da_aggiungere" value="1" min="1">
+        <input type="number" name="quantita_da_aggiungere" id="quantita_da_aggiungere" value="1" min="1">
         <button type="submit">Aggiungi quantità</button>
     </form>
 <% } %>

@@ -5,12 +5,13 @@
 		<meta charset="UTF-8">
 		<title>Cardplanet - Registrazione</title>
 		<link rel="stylesheet" type="text/css" href="../Styles/stile.css">
+		<script src="<%= request.getContextPath() %>/Scripts/Validazione.js"></script>
 	</head>
 	<body>
 		
 		<h2>Inserisci i tuoi dati per registrarti</h2>
 		
-		<form action="/ProgettoTSW/RegistrazioneServlet" method="post">
+		<form action="/ProgettoTSW/RegistrazioneServlet" method="post" id="registrazioneForm">
 			<fieldset>
 			<legend>Informazioni Personali</legend>
 		    <label>Nome:<br><input type="text" name="nome" required></label><br>
