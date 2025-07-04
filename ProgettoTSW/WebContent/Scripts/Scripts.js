@@ -26,15 +26,32 @@ function validaQuantita() {
     return true; // tutto ok, invia il form
 }
 
-function validaVoto() {
-	const votoInput = document.getElementById("voto");
-	    const voto = parseInt(votoInput.value, 10);
+function validaRecensione() {
+	document.getElementById("recensioneForm").addEventListener("submit", function() {
 		
-		if (isNaN(voto) || voto < 1) {
-		        alert("Inserisci un numero valido compreso tra 1 e 5");
-		        votoInput.focus();
-		        return false;
-		    }
+		const votoInput = document.getElementById("voto");
+	    const commentoInput = document.getElementById("commento");
+		
+		const voto = parseInt(votoInput.value, 10);
+		const commento = commentoInput.value.trim();
+		
+			// Controllo voto
+	        if (isNaN(voto) || voto < 1 || voto > 5) {
+	            alert("Il voto deve essere un numero compreso tra 1 e 5.");
+	            e.preventDefault();
+	            return;
+	        }
 
-		    return true;
+	        // Controllo commento
+	        if (commento.length === 0) {
+	            alert("Il commento non può essere vuoto.");
+	            e.preventDefault();
+	            return;
+	        }
+	        if (commento.length < 5) {
+	            alert("Il commento deve contenere almeno 5 caratteri.");
+	            e.preventDefault();
+	            return;
+	        }
+	});
 }

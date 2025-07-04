@@ -82,18 +82,19 @@
 	<% } %>
 	
 	<%
-	
-	Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Ufficio@039!");
-	PreparedStatement mediaStmt = conn.prepareStatement(
-	  "SELECT AVG(voto) as media FROM Recensioni r JOIN Vendite v ON r.id_transazione = v.id_vendita WHERE v.id_utente = ?"
-	);
-	mediaStmt.setInt(1, idUtente);
-	ResultSet rsMedia = mediaStmt.executeQuery();
-	
-	if (rsMedia.next()) {
-	  out.println("<h3>Media voti: " + String.format("%.2f", rsMedia.getDouble("media")) + " / 5</h3>");
-	}
-	rsMedia.close(); mediaStmt.close();
+		// Voti
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Ufficio@039!");
+		PreparedStatement mediaStmt = conn.prepareStatement("SELECT AVG(voto) AS media FROM Recensioni WHERE id_destinatario = ?");
+		mediaStmt.setInt(1, idUtente);
+		ResultSet rsMedia = mediaStmt.executeQuery();
+		
+		if (rsMedia.next() && rsMedia.getDouble("media") != 0) {
+		    out.println("<h3>Media voti: " + String.format("%.2f", rsMedia.getDouble("media")) + " / 5</h3>");
+		} else {
+		    out.println("<h3>Nessuna recensione ricevuta</h3>");
+		}
+		rsMedia.close();
+		mediaStmt.close();
 	%>
 	
 	<h3>Le tue inserzioni</h3>
@@ -167,21 +168,22 @@
 		    </form>
 	    </fieldset>
 	<% } %>
-    
-    
-	<h3>Recensioni</h3>
 	
 	<% if (idUtenteSessione != null && idUtenteSessione != idUtenteProfilo) { %>
-	    <form action="/ProgettoTSW/AggiungiRecensioneServlet" method="post" onsubmit="return validaVoto();">
+	<fieldset>
+		<legend>Recensisci Utente</legend>
+	    <form action="/ProgettoTSW/AggiungiRecensioneServlet" method="post" id="recensioneForm">
 	        <input type="hidden" name="id_destinatario" value="<%= idUtenteProfilo %>">
-	        <label>Transazione:<br><input type="number" name="id_transazione" required></label><br>
 	        <label>Voto (1-5):<br><input type="number" name="voto" id="voto" min="1" max="5" required></label><br>
 	        <label>Commento:<br><textarea name="commento" required></textarea></label><br>
 	        <button type="submit">Invia Recensione</button>
 	    </form>
+	</fieldset>
 	<% } else if (idUtenteSessione == null) { %>
 	    <p><a href="/ProgettoTSW/Login.jsp">Effettua il login per scrivere una recensione</a></p>
 	<% } %>
+	
+	<h3>Recensioni</h3>
 	
 	<%
 	PreparedStatement ps = conn.prepareStatement(
