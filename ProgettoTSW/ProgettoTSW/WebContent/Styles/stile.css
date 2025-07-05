@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #8080ff;
+    color: #333;
+}
+
+nav {
+    margin-bottom: 20px;
+}
+
+nav a {
+    margin-right: 15px;
+    text-decoration: none;
+    color: #007bff;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+.alert {
+		font-weight: bold;
+	    color: red;
+}
+
+.accessoNegato {
+	display: inline-block;
+    background: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+#navbar {
+	background-color: #eee;
+    padding: 10px;
+    font-family: sans-serif;
+    border-bottom: 1px solid #ccc;
+}
+#navbar a {
+	margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.inserzioni {
+	display: flex;
+    flex-wrap: wrap; /* Permette di andare a capo se lo spazio finisce */
+    justify-content: space-around; /* Spazia le inserzioni in maniera uguale */
+}
+
+.dettagliInserzione {
+	flex: 0 1 200px; /* Imposta una larghezza minima per ogni inserzione */
+    text-align: center;
+	margin: 10px;
+	border: 1px solid #ccc;
+	padding: 10px;
+	width: 150px;
+}
+
+.recensione {
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 1em;
+}
+
+.elimina-button {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.elimina-btn:hover {
+  background-color: #c0392b;
+}
+
+
+.dashboard-container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 40px;
+}
+.dashboard-links {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+}
+.dashboard-link {
+    background-color: #3498db;
+    color: white;
+    padding: 12px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+.dashboard-link:hover {
+    background-color: #2980b9;
+}
+
