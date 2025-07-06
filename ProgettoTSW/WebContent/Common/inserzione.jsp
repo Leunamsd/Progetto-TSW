@@ -51,7 +51,6 @@
         }
     }
 
-	
 	if (ruolo == null) {
 	    ruolo = "";
 	}
@@ -83,17 +82,23 @@
 	<p>Prezzo: €<%= prezzo %></p>
 	
 	<!-- Pulsanti per tutti -->
-	<form action="/ProgettoTSW/AggiungiWishlistServlet" method="post">
-	        <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
-	        <button type="submit">Aggiungi alla Wishlist</button>
-	</form>
-	<% if (quantitaDisponibile > 0 && idUtenteInserzionista != idUtente) { %>
-	    <form action="/ProgettoTSW/AggiungiAlCarrelloServlet" method="post">
-	        <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
-	        <button type="submit">Aggiungi al carrello</button>
-	    </form>
-	<% } else if (quantitaDisponibile == 0) { %>
-	    <p class="alert">Prodotto esaurito</p>
+	<% if (idUtenteInserzionista != idUtente && idUtente != -1) { %>
+		<form action="/ProgettoTSW/AggiungiWishlistServlet" method="post">
+		        <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
+		        <button type="submit">Aggiungi alla Wishlist</button>
+		</form>
+		<% if (quantitaDisponibile > 0) { %>
+		    <form action="/ProgettoTSW/AggiungiAlCarrelloServlet" method="post">
+		        <input type="hidden" name="id_inserzione" value="<%= idInserzione %>">
+		        <button type="submit">Aggiungi al carrello</button>
+		    </form>
+		<% } else if (quantitaDisponibile == 0) { %>
+		    <p class="alert">Prodotto esaurito</p>
+		<% } %>
+	<% } else if(idUtente == -1) { %>
+	
+		<p><a href="login.jsp">Effettua il login per iniziare ad acquistare</a></p>
+	
 	<% } %>
 	
 	<% if (idUtente == idUtenteInserzionista || ruolo.equals("amministratore")) { %>

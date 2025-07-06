@@ -16,7 +16,7 @@
         <p class="alert">Credenziali errate. Riprova.</p>
         
     <%
-        } else {
+        } else if(errore != null) {
     %>
     	<p class="alert">Errore: <%= errore %></p>
     <%
