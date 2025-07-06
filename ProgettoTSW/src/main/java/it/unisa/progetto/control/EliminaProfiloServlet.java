@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -39,8 +40,8 @@ public class EliminaProfiloServlet extends HttpServlet {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                System.err.println("Errore SQL: " + e.getMessage());
-                response.sendRedirect("/ProgettoTSW/Common/errore.jsp");
+                String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
+                response.sendRedirect("/ProgettoTSW/Common/profilo.jsp?errore=" + errorMessage);
             }
         } else {
             response.sendRedirect("/ProgettoTSW/Common/accessoNegato.jsp");

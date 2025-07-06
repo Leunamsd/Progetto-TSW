@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -31,7 +32,8 @@ public class EliminaSegnalazioneServlet extends HttpServlet {
             response.sendRedirect("/ProgettoTSW/Admin/adminSegnalazioni.jsp");
 		} catch (SQLException e) {
 			e.printStackTrace();
-			System.out.println("Errore: " + e.getMessage());
+			String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
+            response.sendRedirect("/ProgettoTSW/Admin/adminSegnalazioni.jsp=" + errorMessage);
 		}
 	}
 

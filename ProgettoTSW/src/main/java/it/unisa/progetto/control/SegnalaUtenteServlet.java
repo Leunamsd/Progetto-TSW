@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -34,7 +35,9 @@ public class SegnalaUtenteServlet extends HttpServlet {
             stmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Errore: " + e.getMessage());
+            String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
+            response.sendRedirect("/ProgettoTSW/Common/profilo.jsp?id=" + idUtenteSegnalato + "&errore=" + errorMessage);
+
         }
 
         response.sendRedirect("/ProgettoTSW/Common/profilo.jsp?id=" + idUtenteSegnalato);

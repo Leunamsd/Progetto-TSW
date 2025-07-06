@@ -11,6 +11,15 @@
 
 <h2>La tua Wishlist</h2>
 
+	<%
+    String errore = request.getParameter("errore");
+    if (errore != null) {
+	%>
+	        <p class="alert">Errore: <%= errore %></p>
+	<%
+	    }
+	%>
+
 <%
     try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Ufficio@039!")) {
         String sql = "SELECT i.id_inserzione, i.nome, i.prezzo, i.serie, i.rarita FROM Inserzioni i " +

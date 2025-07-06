@@ -40,23 +40,14 @@
 
 	<h2>Profilo di <%= username %></h2>
 	
-		<%
-	        String errore = request.getParameter("errore");
-	        if ("insert".equals(errore)) {
-	    %>
-	        <p class="alert">Errore nella richiesta SQL.</p>
-	        
-	    <%
-	        } else if("invalidInput".equals(errore)) {
-	    %>
-	    	<p class="alert">Errore nell'input.</p>
-	    <%
-	        } else if("generic".equals(errore)) {
-	    %>
-	    	<p class="alert">Errore nella creazione dell'inserzione.</p>
-	    <%
-	        }
-	    %>
+	<%
+    String errore = request.getParameter("errore");
+    if (errore != null) {
+	%>
+	        <p class="alert">Errore: <%= errore %></p>
+	<%
+	    }
+	%>
 	    
 	<% if (isLoggedIn == true) { %>
 	<fieldset>
@@ -180,37 +171,42 @@
 	    </form>
 	</fieldset>
 	<% } else if (idUtenteSessione == null) { %>
-	    <p><a href="/ProgettoTSW/Login.jsp">Effettua il login per scrivere una recensione</a></p>
+	    <p><a href="login.jsp">Effettua il login per scrivere una recensione</a></p>
 	<% } %>
 	
 	<h3>Recensioni</h3>
 	
 	<%
-	PreparedStatement ps = conn.prepareStatement(
-	  "SELECT r.id_recensione, r.id_utente, r.voto, r.commento, r.data_creazione, u.username " +
-	  "FROM Recensioni r JOIN Utenti u ON r.id_utente = u.id_utente " +
-	  "WHERE id_transazione IN (SELECT id_vendita FROM Vendite WHERE id_utente = ?)");
-	
-	while (rs.next()) {
-	    int idRecensione = rs.getInt("id_recensione");
-	    int idAutore = rs.getInt("id_utente");
+		PreparedStatement ps = conn.prepareStatement(
+		  "SELECT r.id_recensione, r.id_utente, r.id_destinatario, r.voto, r.commento, r.data_creazione, u.username " +
+		  "FROM Recensioni r JOIN Utenti u ON r.id_utente = u.id_utente " +
+		  "WHERE r.id_destinatario = ? ORDER BY r.data_creazione DESC"
+		);
+		ps.setInt(1, idUtente);
+		ResultSet rsR = ps.executeQuery();
+		
+		while (rsR.next()) {
+		    int idRecensione = rsR.getInt("id_recensione");
+		    int idAutore = rsR.getInt("id_utente");
+		    
+		%>
+		
+		  <div class="recensione">
+		    <p><strong><%= rsR.getString("username") %></strong> ha scritto:</p>
+		    <p>Voto: <%= rsR.getInt("voto") %> / 5</p>
+		    <p>Commento: <%= rsR.getString("commento") %></p>
+		
+		    <% if (isLoggedIn && (idUtenteSessione == idAutore || "amministratore".equalsIgnoreCase(ruolo))) { %>
+		      <form action="/ProgettoTSW/EliminaRecensioneServlet" method="post" class="elimina-form" onsubmit="return confermaEliminazioneRec();">
+		        <input type="hidden" name="id_recensione" value="<%= idRecensione %>">
+		        <button type="submit" class="elimina-button">Elimina</button>
+		      </form>
+		    <% } %>
+		  </div>
+		<%
+		}
+		rs.close();
+		ps.close();
 	%>
-	  <div class="recensione">
-	    <p><strong><%= rs.getString("username") %></strong> ha scritto il <%= rs.getTimestamp("data_creazione") %>:</p>
-	    <p>Voto: <%= rs.getInt("voto") %> / 5</p>
-	    <p>Commento: <%= rs.getString("commento") %></p>
-	
-	    <% if (isLoggedIn && (idUtenteSessione == idAutore || "amministratore".equalsIgnoreCase(ruolo))) { %>
-	      <form action="/ProgettoTSW/EliminaRecensioneServlet" method="post" class="elimina-form" onsubmit="return confermaEliminazioneRec();">
-	        <input type="hidden" name="id_recensione" value="<%= idRecensione %>">
-	        <button type="submit" class="elimina-button">Elimina</button>
-	      </form>
-	    <% } %>
-	  </div>
-	  <hr>
-	<%
-	}
-	rs.close();
-	ps.close();
-	%>
+
 </body>

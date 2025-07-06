@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -58,7 +59,7 @@ public class LoginServlet extends HttpServlet {
             }
 
             // Se login fallito
-            response.sendRedirect("/ProgettoTSW/Common/login.jsp?errore=1");
+            response.sendRedirect("/ProgettoTSW/Common/login.jsp?errore=cred");
 
             rs.close();
             stmt.close();
@@ -66,7 +67,8 @@ public class LoginServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("/ProgettoTSW/Common/login.jsp?errore=2");
+            String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
+            response.sendRedirect("/ProgettoTSW/Common/login.jsp?errore=" + errorMessage);
         }
     }
 }

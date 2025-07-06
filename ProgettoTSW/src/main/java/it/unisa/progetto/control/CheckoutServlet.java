@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -60,8 +61,8 @@ public class CheckoutServlet extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Errore: " + e.getMessage());
-            response.sendRedirect("errore.jsp");
+            String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
+            response.sendRedirect("/ProgettoTSW/User/ordini.jsp?errore=" + errorMessage);
         }
     }
 }

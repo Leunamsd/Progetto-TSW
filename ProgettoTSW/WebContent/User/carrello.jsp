@@ -29,6 +29,16 @@
 	
 	%>
 	    <h2>🛒 Il tuo carrello</h2>
+	    
+	    <%
+	    String errore = request.getParameter("errore");
+	    if (errore != null) {
+		%>
+		        <p class="alert">Errore: <%= errore %></p>
+		<%
+		    }
+		%>
+	    
 	    <table border="1">
 	        <tr><th>Prodotto</th><th>Prezzo</th><th>Quantità</th><th>Totale</th><th>Azioni</th></tr>
 	

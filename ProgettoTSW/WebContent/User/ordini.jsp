@@ -21,6 +21,16 @@
 %>
 
 <h2>I tuoi Ordini</h2>
+
+	<%
+    String errore = request.getParameter("errore");
+    if (errore != null) {
+	%>
+	        <p class="alert">Errore: <%= errore %></p>
+	<%
+	    }
+	%>
+
 <table border="1">
     <tr><th>ID Ordine</th><th>Prodotto</th><th>Data</th><th>Totale Spesa</th><th>Stato Vendita</th><th>Azioni</th></tr>
 <%

@@ -60,6 +60,15 @@
         username = rsU.getString("username");
     }
 	%>
+	
+	<%
+    String errore = request.getParameter("errore");
+    if (errore != null) {
+	%>
+	        <p class="alert">Errore: <%= errore %></p>
+	<%
+	    }
+	%>
 
 	<p>Venduto da:
 	  <a href="<%= contextPath %>/Common/profilo.jsp?id=<%= idUtenteInserzionista %>">

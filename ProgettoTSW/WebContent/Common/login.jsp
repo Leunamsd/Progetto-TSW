@@ -11,14 +11,14 @@
     
     <%
         String errore = request.getParameter("errore");
-        if ("1".equals(errore)) {
+        if ("cred".equals(errore)) {
     %>
         <p class="alert">Credenziali errate. Riprova.</p>
         
     <%
-        } else if("2".equals(errore)) {
+        } else {
     %>
-    	<p class="alert">Exception error.</p>
+    	<p class="alert">Errore: <%= errore %></p>
     <%
         }
     %>

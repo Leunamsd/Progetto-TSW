@@ -17,6 +17,16 @@
 
 <body>
 <h2>Lista Inserzioni</h2>
+
+	<%
+    String errore = request.getParameter("errore");
+    if (errore != null) {
+	%>
+	        <p class="alert">Errore: <%= errore %></p>
+	<%
+	    }
+	%>
+
 <table border="1">
     <tr>
         <th>Immagine</th><th>Nome</th><th>Serie</th><th>Rarità</th><th>Prezzo</th><th>Quantità</th><th>Condizione</th><th>Azioni</th>

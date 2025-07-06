@@ -12,6 +12,15 @@
 <body>
 <h2>📋 Segnalazioni</h2>
 
+	<%
+    String errore = request.getParameter("errore");
+    if (errore != null) {
+	%>
+	        <p class="alert">Errore: <%= errore %></p>
+	<%
+	    }
+	%>
+
 <table border="1">
 <tr>
     <th>ID</th><th>Segnalante</th><th>Segnalato</th><th>Data</th><th>Descrizione</th><th>Stato</th><th>Azioni</th>

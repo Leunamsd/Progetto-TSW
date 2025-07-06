@@ -10,6 +10,7 @@ import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -63,16 +64,13 @@ public class InserisciInserzioneServlet extends HttpServlet {
 	            
 	        } catch (SQLException e) {
 	            e.printStackTrace();
-	            System.out.println("Errore: " + e.getMessage());
-	            response.sendRedirect("/ProgettoTSW/Common/pofilo.jsp?errore=insert");
+	            String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
+	            response.sendRedirect("/ProgettoTSW/Common/profilo.jsp?errore=" + errorMessage);
 	        }
 
-	    } catch (NumberFormatException e) {
-	        e.printStackTrace();
-	        response.sendRedirect("/ProgettoTSW/profilo.jsp?errore=invalidInput");
 	    } catch (Exception e) {
-	        e.printStackTrace();
-	        response.sendRedirect("/ProgettoTSW/Common/profilo.jsp?errore=generic");
+	    	String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
+	        response.sendRedirect("/ProgettoTSW/Common/profilo.jsp?errore=" + errorMessage);
 	    }
 	}
 }

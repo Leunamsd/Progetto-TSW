@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -47,8 +48,12 @@ public class EliminaInserzioneServlet extends HttpServlet {
 
             } catch (SQLException e) {
                 e.printStackTrace();
-                System.out.println("Errore: " + e.getMessage());
-                response.sendRedirect("/ProgettoTSW/Common/errore.jsp");
+                String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
+                if ("admin".equals(origine)) {
+                    response.sendRedirect("/ProgettoTSW/Admin/adminInserzioni.jsp?errore=" + errorMessage);
+                } else {
+                	response.sendRedirect("/ProgettoTSW/Common/profilo.jsp?errore=" + errorMessage);
+                }
             }
         } else {
             response.sendRedirect("/ProgettoTSW/Common/accessoNegato.jsp");

@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -29,6 +30,8 @@ public class AggiungiWishlistServlet extends HttpServlet {
             stmt.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
+            String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
+            response.sendRedirect("/ProgettoTSW/User/wishlist.jsp?errore=" + errorMessage);
         }
         response.sendRedirect("/ProgettoTSW/User/wishlist.jsp");
     }

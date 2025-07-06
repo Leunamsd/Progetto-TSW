@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -20,13 +21,9 @@ public class CancellaOrdineServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         
+		int idUtente = (int) request.getSession().getAttribute("id_utente");
         String idOrdineStr = request.getParameter("id_ordine");
-        String origine = request.getParameter("origine"); // es. "profilo", "adminOrdini", ecc
-
-        if (idOrdineStr == null || idOrdineStr.isEmpty()) {
-            response.sendRedirect("errore.jsp?errore=missingId");
-            return;
-        }
+        String origine = request.getParameter("origine");
 
         try {
             int idOrdine = Integer.parseInt(idOrdineStr);
@@ -44,13 +41,13 @@ public class CancellaOrdineServlet extends HttpServlet {
             if ("adminOrdini".equalsIgnoreCase(origine)) {
                 response.sendRedirect("adminOrdini.jsp");
             } else {
-                response.sendRedirect("/ProgettoTSW/Common/profilo.jsp?id=" + request.getSession().getAttribute("id_utente"));
+                response.sendRedirect("/ProgettoTSW/Common/profilo.jsp?id=" + idUtente);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Errore: " + e.getMessage());
-            response.sendRedirect("errore.jsp?errore=deleteOrder");
+            String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
+            response.sendRedirect("/ProgettoTSW/Common/profilo.jsp?id=" + idUtente + "&errore=" + errorMessage);
         }
     }
 }
