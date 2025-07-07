@@ -23,16 +23,18 @@ public class AggiungiWishlistServlet extends HttpServlet {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/test", "root", "Ufficio@039!");
-            String sql = "INSERT IGNORE INTO Wishlist (id_utente, id_inserzione) VALUES (?, ?)";
+            String sql = "INSERT IGNORE INTO Wishlist (id_utente, id_carta) VALUES (?, ?)";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setInt(1, idUtente);
             stmt.setInt(2, idInserzione);
             stmt.executeUpdate();
+            
+            response.sendRedirect("/ProgettoTSW/User/wishlist.jsp");
+            
         } catch (Exception e) {
             e.printStackTrace();
             String errorMessage = URLEncoder.encode(e.getMessage(), "UTF-8");
             response.sendRedirect("/ProgettoTSW/User/wishlist.jsp?errore=" + errorMessage);
         }
-        response.sendRedirect("/ProgettoTSW/User/wishlist.jsp");
     }
 }

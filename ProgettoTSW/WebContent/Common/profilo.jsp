@@ -146,7 +146,7 @@
     <% } %>
 
 	<%
-	boolean mostraPulsanteSegnala = isLoggedIn && (idUtenteSessione != -1) && (idUtenteSessione != idUtenteProfilo);
+	boolean mostraPulsanteSegnala = isLoggedIn && (idUtenteSessione != idUtenteProfilo);
 	
 	if (mostraPulsanteSegnala) {
 	%>
@@ -160,7 +160,7 @@
 	    </fieldset>
 	<% } %>
 	
-	<% if (idUtenteSessione != null && idUtenteSessione != idUtenteProfilo) { %>
+	<% if (isLoggedIn && idUtenteSessione != idUtenteProfilo) { %>
 	<fieldset>
 		<legend>Recensisci Utente</legend>
 	    <form action="/ProgettoTSW/AggiungiRecensioneServlet" method="post" id="recensioneForm">
@@ -170,7 +170,7 @@
 	        <button type="submit">Invia Recensione</button>
 	    </form>
 	</fieldset>
-	<% } else if (idUtenteSessione == null) { %>
+	<% } else if (!isLoggedIn) { %>
 	    <p><a href="login.jsp">Effettua il login per scrivere una recensione</a></p>
 	<% } %>
 	

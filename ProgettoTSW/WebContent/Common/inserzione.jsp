@@ -34,7 +34,7 @@
 
 <head>
 <meta charset="UTF-8">
-<title>eCommerce - <%= nome %></title>
+<title>Cardplanet - <%= nome %></title>
 <link rel="stylesheet" type="text/css" href="../Styles/stile.css">
 <script src="<%= request.getContextPath() %>/Scripts/Scripts.js"></script>
 </head>
